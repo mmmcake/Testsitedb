@@ -9,16 +9,7 @@
 		<div id="Wrapper">
 			<div id="TopBar">
 				<div id="login">
-					<form name = "form1" method = "post" action = "checklog.php">
-						<table border="0">
-							<tr>
-							<td><a href="Forgotpw.php" class="loginFP">Forgotten Password ?</a>
-							Username:- <input type="text" name="username" value=""/> 
-							Password:- <input type="password" name="password" value=""/> 
-							<a href="checklog.php"><input type="button" value="Login"></a></td>
-							</tr>
-						</table>
-					</form>
+					
 				</div>
 			</div>
 			
@@ -32,25 +23,17 @@
 				</div>
 				
 				<div id="Body">
+				<form name = "formregister" method = "post" action = "checkreg.php">
 					<table class="tableregister">
 					<tr>
-						<td>Name :- </td><td><input type="text" name="fname" class="registerbox"></td>
+						<td>Name :- </td><td><input type="text" name="rname" class="registerbox"></td>
 					</tr>
 					<tr>
-						<td>Email :- </td><td><input type="text" name="fname" class="registerbox"></td>
-					</tr>
-					<tr>
-						<td>Confirm Email :- </td><td><input type="text" name="fname" class="registerbox"></td>
-					</tr>
-					<tr>
-						<td>Password :- </td><td><input type="password" name="fname" class="registerbox"></td>
-					</tr>
-					<tr>
-						<td>Confirm Password :- </td><td><input type="password" name="fname" class="registerbox"></td>
+						<td>Password :- </td><td><input type="password" name="rpass" class="registerbox"></td>
 					</tr>
 					</table>
-					<input type="button" value="Submit">
-					
+					<input type="submit" value="Login">
+				</form>
 				</div>
 				
 				<div id="Footer">

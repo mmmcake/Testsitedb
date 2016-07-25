@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<?php
+
+	session_start();
+	$loguser = $_SESSION["loguser"];
+	If(!isset($loguser))
+	{
+		header( 'location: HomeG.php' );
+	}
+	Else
+	{
+	
+	}
+?>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -9,7 +22,7 @@
 		<div id="Wrapper">
 			<div id="TopBar">
 				<div id="login">
-					You are logged in as :- <b><i>Technician</i></b>  Not Technician ?  <a href="HomeG.php"><b><i>Logout</i></b></a>
+					You are logged in as :- <b><i><?php echo $loguser; ?></i></b>  Not <?php echo $loguser; ?> ?  <a href="HomeG.php"><b><i>Logout</i></b></a>
 				</div>
 			</div>
 			
@@ -25,7 +38,7 @@
 				<div id="Body">
 					<img src="Images/FNRlogo.png" alt="some_text" class="homeimg1"/>
 					<p class="Bodyparahome">
-						Welcome to Fix and Run Enterprises.
+						<?php echo "<i>Welcome back </i>" . $loguser; ?>
 					</p>
 					<img src="Images/FNRlogo.png" alt="some_text" class="homeimg2"/>
 				</div>

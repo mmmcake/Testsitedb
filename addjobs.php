@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <?php
-
 	session_start();
 	$loguser = $_SESSION["loguser"];
 	If(!isset($loguser))
 	{
-		
 		header( 'location: HomeG.php' );
 	}
 	Else
 	{
-	
+		
 	}
 ?>
 <html lang="en">
@@ -23,7 +21,7 @@
 		<div id="Wrapper">
 			<div id="TopBar">
 				<div id="login">
-					
+					You are logged in as :- <b><i><?php echo $loguser; ?></i></b>  Not <?php echo $loguser; ?> ?  <a href="HomeG.php"><b><i>Logout</i></b></a>
 				</div>
 			</div>
 			
@@ -33,11 +31,10 @@
 				</div>
 				
 				<div id="Nav">
-					<a href="HomeG.php"><img src="Images/Homebtn.gif" alt="some_text"/></a><a href="AboutusG.php"><img src="Images/AUbtn.gif" alt="some_text"/></a><a href="SupportG.php"><img src="Images/Supportbtn.gif" alt="some_text"/></a><a href="ContactusG.php"><img src="Images/CUbtn.gif" alt="some_text"/></a><a href="Register.php"><img src="Images/Registerbtn.gif" alt="some_text"/></a><img src="Images/ROBar.gif" alt="some_text"/>
+					<a href="HomeT.php"><img src="Images/Homebtn.gif" alt="some_text"/></a><a href="AboutusT.php"><img src="Images/AUbtn.gif" alt="some_text"/></a><a href="SupportT.php"><img src="Images/Supportbtn.gif" alt="some_text"/></a><a href="ContactusT.php"><img src="Images/CUbtn.gif" alt="some_text"/></a><a href="Jobs.php"><img src="Images/Jobsbtn.gif" alt="some_text"/></a><img src="Images/ROBar.gif" alt="some_text"/>
 				</div>
 				
-				<div id="Body">
-					<?php
+				<?php
 			//This handles the login authentication
 			//set up variables for database connection
 			
@@ -48,48 +45,32 @@
 			
 			//connect to database server
 			$con = mysqli_connect($server,$username,$password,$database) or die("error: could not connect");
-			if(!isset($_POST["username"]) && !isset($_POST["password"]))
-			{
-				echo "Login failed";
-			}
-			else
-			{
-				//get the posted values from the previous page
-				$user = $_POST["username"];
-				$pass = $_POST["password"];
-				//query the database for a matching login record
-				if($result = mysqli_query($con,"SELECT * FROM users WHERE username = '$user' and password = '$pass'"))
-				{
-					$rowcount = mysqli_num_rows($result);
-						if($rowcount == 1)
-						{	
-							/*
-							echo "<br>";
-							echo "<br>";
-							echo "<i>Welcome back </i>" . $user;
-							echo "<br>";
-							echo "<br>";
-							echo "<a href=HomeT.php>Continue to home page</a>";
-							*/
-							header( 'location: HomeT.php' );
-						}
-						else
-						{
-							echo "Login failed";
-						}
-					//count the number of rows that match the query
-					// Return the number of rows in result set
-				}
-				else
-				{
-					echo "login failed";
-				}
-				//release the database connection
-				mysqli_close($con);
-			}
 			
-					
+			$Jobids = mysqli_query( $con,"SELECT * FROM jobs" ) or die("error with query");
+			
+			//release the database connection
+			mysqli_close($con); 
 		?>
+				
+				<div id="Body">
+				<h2>Add A Job</h2>
+				<form name = "formaddjob" method = "post" action = "checkaddjob.php">
+					<table class='addjobtable'>
+						<tr>
+						<td>JobID - </td><td><input type="text" size="101" maxlength="25" name="AJjobid" required></td><td class="jobsmall"><i>(25 Max Char)</i></td>
+						</tr>
+						<tr>
+						<td>Job Status - </td><td><input type="text" size="101" maxlength="10" name="AJjobstats" required></td><td class="jobsmall"><i>(10 Max Char)</i></td>
+						</tr>
+						<tr>
+						<td>Subject - </td><td><input type="text" size="101" maxlength="30" name="AJjobsub" required></td><td class="jobsmall"><i>(30 Max Char)</i></td>
+						</tr>
+						<tr>
+						<td>Details - </td><td><textarea name="AJdetails" cols="100" rows="7" maxlength="250" required></textarea></td><td class="jobsmall"><i>(250 Max Char)</i></td>
+						</tr>
+					</table>
+					<input type="submit" value="Submit">
+				
 				</div>
 				
 				<div id="Footer">

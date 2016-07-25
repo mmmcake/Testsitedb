@@ -1,18 +1,4 @@
 <!DOCTYPE html>
-<?php
-
-	session_start();
-	$loguser = $_SESSION["loguser"];
-	If(!isset($loguser))
-	{
-		
-		header( 'location: HomeG.php' );
-	}
-	Else
-	{
-	
-	}
-?>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -38,58 +24,33 @@
 				
 				<div id="Body">
 					<?php
-			//This handles the login authentication
-			//set up variables for database connection
+						//This handles the login authentication
+						//set up variables for database connection
 			
-			$username = "root";
-			$password = "";
-			$server = "localhost";
-			$database = "helpdesk";
+						$username = "root";
+						$password = "";
+						$server = "localhost";
+						$database = "helpdesk";
 			
-			//connect to database server
-			$con = mysqli_connect($server,$username,$password,$database) or die("error: could not connect");
-			if(!isset($_POST["username"]) && !isset($_POST["password"]))
-			{
-				echo "Login failed";
-			}
-			else
-			{
-				//get the posted values from the previous page
-				$user = $_POST["username"];
-				$pass = $_POST["password"];
-				//query the database for a matching login record
-				if($result = mysqli_query($con,"SELECT * FROM users WHERE username = '$user' and password = '$pass'"))
-				{
-					$rowcount = mysqli_num_rows($result);
-						if($rowcount == 1)
-						{	
-							/*
-							echo "<br>";
-							echo "<br>";
-							echo "<i>Welcome back </i>" . $user;
-							echo "<br>";
-							echo "<br>";
-							echo "<a href=HomeT.php>Continue to home page</a>";
-							*/
-							header( 'location: HomeT.php' );
+						//connect to database server
+						$con = mysqli_connect($server,$username,$password,$database) or die("error: could not connect");
+						//get the posted values from the previous page
+						$checkuser = $_POST["rname"];
+						$checkpass = $_POST["rpass"];
+						//echo $checkuser;
+						//echo $checkpass;
+						if(!isset($_POST["rname"]) && !isset($_POST["rpass"]))
+						{
+							echo "Registration failed";
 						}
 						else
 						{
-							echo "Login failed";
+							mysqli_query($con,"INSERT INTO users (username, password)
+							VALUES ('$checkuser', '$checkpass')");
+							echo "New user added";
 						}
-					//count the number of rows that match the query
-					// Return the number of rows in result set
-				}
-				else
-				{
-					echo "login failed";
-				}
-				//release the database connection
-				mysqli_close($con);
-			}
-			
-					
-		?>
+						mysqli_close($con);
+				?>
 				</div>
 				
 				<div id="Footer">
@@ -126,6 +87,7 @@
 				
 						echo getBrowser();
 					?></p>
+					
 				</div>
 			</div>
 		</div>

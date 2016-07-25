@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-
 	session_start();
 	$loguser = $_SESSION["loguser"];
 	If(!isset($loguser))
@@ -9,7 +8,7 @@
 	}
 	Else
 	{
-	
+		
 	}
 ?>
 <html lang="en">
@@ -36,20 +35,39 @@
 				</div>
 				
 				<div id="Body">
-					<div id="CUtext"><p>
-						Name:-		</p></div><input type="text" name="fname" class="CUinput1">
-						<br>
-
-					<div id="CUtext"><p>
-						Email Address:-		</p></div><input type="text" name="fname" class="CUinput2">
-						<br>
-					<div id="CUtext"><p>
-						Subject:-		</p></div><input type="text" name="fname" class="CUinput3">
-						<br>
-					<div id="CUtext"><p>
-						Content:-		</p></div><input type="text" name="fname" class="CUinput4">
-					</p>
-					<input type="submit" value="Submit">
+					<?php
+						//This handles the login authentication
+						//set up variables for database connection
+			
+						$username = "root";
+						$password = "";
+						$server = "localhost";
+						$database = "helpdesk";
+			
+						//connect to database server
+						$con = mysqli_connect($server,$username,$password,$database) or die("error: could not connect");
+						//get the posted values from the previous page
+						$addjobid = $_POST["AJjobid"];
+						$addjobstatus = $_POST["AJjobstats"];
+						$addjobsubject = $_POST["AJjobsub"];
+						$addjobdetails = $_POST["AJdetails"];
+						/*if statement used to check if the posted values are not set and if one hasnt been set it will 
+						echo the error message and link them back to the home page*/
+						if(!isset($_POST["AJjobid"]) && !isset($_POST["AJjobstats"]) && !isset($_POST["AJjobsub"]) && !isset($_POST["AJdetails"]))
+						{
+							echo "Failed to add a job input fields were missing";
+							echo "<a href='jobs.php'>Jobs Home</a>";
+						}
+						else
+						{
+							//Used to insert the values posted from 'addjobs.php' into the table 'jobs' and then links to the jobs page
+							mysqli_query($con,"INSERT INTO jobs (JobID, Status, Subject,Details)
+							VALUES ('$addjobid', '$addjobstatus', '$addjobsubject', '$addjobdetails')");
+							echo "<p class='jobaddedp'>New job has been added</p>";
+							echo "<a href='jobs.php'>Jobs Home</a>";
+						}
+						mysqli_close($con);
+					?>
 				</div>
 				
 				<div id="Footer">
@@ -63,7 +81,7 @@
 							/*preg_match() is a php function that will look for a match within a string. It will only match once even if it finds multiple matchs in a string.*/
 							if (preg_match("/Opera/i",$u_agent))
 							{
-								$ub = "Your browser is Opera";
+								$ub = "Your browser is Opera"; 
 							}
 							elseif (preg_match("/Firefox/i",$u_agent))
 							{
@@ -86,6 +104,7 @@
 				
 						echo getBrowser();
 					?></p>
+					
 				</div>
 			</div>
 		</div>
